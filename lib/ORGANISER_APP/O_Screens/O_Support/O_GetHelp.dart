@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:stub_guys/ATTANDEE_APP/A_Screens/Support/Components/gethelptiles.dart';
+import 'package:stub_guys/ORGANISER_APP/O_Screens/O_Support/O_GetHelpTopic.dart';
 
 class O_Gethelp extends StatefulWidget {
   const O_Gethelp({super.key});
@@ -37,7 +38,7 @@ class _O_GethelpState extends State<O_Gethelp> {
                           'Assets/Images/Icon/HelpSupport/back.svg',
                           height: 20.0,
                           width: 20.0,
-                          color: Color(0xFF201335),
+                          color: const Color(0xFF201335),
                         ),
                         Expanded(child: Container()),
                         const Text(
@@ -53,7 +54,7 @@ class _O_GethelpState extends State<O_Gethelp> {
                           'Assets/Images/Icon/HelpSupport/search.svg',
                           height: 20.0,
                           width: 20.0,
-                          color: Color(0xFF201335),
+                          color: const Color(0xFF201335),
                         ),
                       ],
                     ),
@@ -63,32 +64,41 @@ class _O_GethelpState extends State<O_Gethelp> {
               const SizedBox(
                 height: 10.0,
               ),
-              const Column(
+               Column(
                 children: [
-                  GetHelptiles(
-                      Title: "Getting Started",
-                      SubTitle: "Setting up your Stubguys account.",
-                      NumberofArticles: "5 articles"),
-                  GetHelptiles(
+                  GestureDetector(
+                     onTap: () => {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const O_Gethelptopic()),
+                            )
+                          },
+                    child: const GetHelptiles(
+                        Title: "Getting Started",
+                        SubTitle: "Setting up your Stubguys account.",
+                        NumberofArticles: "5 articles"),
+                  ),
+                  const GetHelptiles(
                       Title: "Getting Refunds",
                       SubTitle:
                       "Everything you ned to know about requesting refunds",
                       NumberofArticles: "24 articles"),
-                  GetHelptiles(
+                  const GetHelptiles(
                       Title: "Buying tickets",
                       SubTitle:
                       "Everything you ned to know about buying tickets",
                       NumberofArticles: "5 articles"),
-                  GetHelptiles(
+                  const GetHelptiles(
                       Title: "Fees & Pricing",
                       SubTitle:
                       "Learn more about fees for various transactions/payments",
                       NumberofArticles: "11 articles"),
-                  GetHelptiles(
+                  const GetHelptiles(
                       Title: "Frequently Asked Questions",
                       SubTitle: "Answers to frequently asked questions",
                       NumberofArticles: "9 articles"),
-                  GetHelptiles(
+                  const GetHelptiles(
                       Title: "Contact us",
                       SubTitle: "How to contact Stubguys",
                       NumberofArticles: "1 articles")

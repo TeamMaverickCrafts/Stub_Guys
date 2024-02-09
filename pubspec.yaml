@@ -52,6 +52,7 @@ dependencies:
   table_calendar: ^3.0.9
   image_picker: ^0.8.4+4
   dotted_line: ^3.2.2
+  flutter_slidable: ^3.0.1
 
 
 
@@ -84,6 +85,7 @@ flutter:
     - Assets/ORGANISER_APP/Icons/Dashboard/
     - Assets/ORGANISER_APP/Images/O_Profile/
     - Assets/Videos/
+    - Assets/Emoji/
     - Assets/Images/OnBoarding/
     - Assets/Images/Components/
     - Assets/Images/Components/Payment/

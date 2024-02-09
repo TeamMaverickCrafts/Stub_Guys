@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:stub_guys/ORGANISER_APP/O_Screens/ManageOrders/Components/orderssampledata.dart';
+import 'package:stub_guys/ORGANISER_APP/O_Screens/ManageOrders/Refund.dart';
+
+
+bool OrderManage = false;
 
 class ManageOrders extends StatefulWidget {
   const ManageOrders({super.key});
@@ -23,15 +28,15 @@ class _ManageOrdersState extends State<ManageOrders> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+        padding: EdgeInsets.only(left: 16.0, right: 16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start, 
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  padding: const EdgeInsets.only(top: 50.0),
+                  padding: EdgeInsets.only(top: 50.0),
                   child: const Text(
                     "Manage\nOrders",
                     style: TextStyle(
@@ -113,7 +118,7 @@ class _ManageOrdersState extends State<ManageOrders> {
                 ),
               ],
             ),
-    
+
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.01,
             ),
@@ -129,7 +134,7 @@ class _ManageOrdersState extends State<ManageOrders> {
               height: MediaQuery.of(context).size.height * 0.02,
             ),
             Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: EdgeInsets.only(left: 16, right: 16, top: 16),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -139,6 +144,9 @@ class _ManageOrdersState extends State<ManageOrders> {
                       GestureDetector(
                         onTap: () {
                           setState(() {
+                            if (refundData == true) {
+                              OrderManage = !OrderManage;
+                            }
                             selectedOption = 'Option 1';
                           });
                         },
@@ -175,6 +183,10 @@ class _ManageOrdersState extends State<ManageOrders> {
                       GestureDetector(
                         onTap: () {
                           setState(() {
+                            if (refundData == false) {
+                              OrderManage = !OrderManage;
+                            }
+
                             selectedOption = 'Option 2';
                           });
                         },
@@ -210,106 +222,363 @@ class _ManageOrdersState extends State<ManageOrders> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 20.0),
-                  selectedOption.isNotEmpty
-                      ? Column(
-                          children: [
-                            const Text(
-                              'Selected Option:',
-                              style: TextStyle(fontSize: 18.0),
-                            ),
-                            Text(
-                              selectedOption,
-                              style: const TextStyle(
-                                fontSize: 24.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            // Add additional content based on the selected option
-                            // For example, you can show different widgets or data here
-                          ],
-                        )
-                      : const SizedBox.shrink(),
                 ],
               ),
             ),
             // Scrollable ListView.builder
-            Expanded(
-              child: ListView.builder(
-                itemCount:
-                    transactionData.length, // Adjust the item count as needed
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Row(
-                      children: [
-                        Container(
-                            width: 38.0,
-                            height: 38.0,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color:
-                                  transactionData[index]['status'] == 'outgoing'
-                                      ? const Color(0xFFECFFD2)
-                                      : const Color(0xFFFFD2D2),
-                            ),
-                            child: Center(
-                              child:
-                                  transactionData[index]['status'] == 'outgoing'
-                                      ? SvgPicture.asset(
-                                          'Assets/ORGANISER_APP/Icons/Orders/outgoing.svg',
-                                          width: 16.0,
-                                          height: 16.0,
-                                        )
-                                      : SvgPicture.asset(
-                                          'Assets/ORGANISER_APP/Icons/Orders/incoming.svg',
-                                          width: 16.0,
-                                          height: 16.0,
+            selectedOption == 'Option 1'
+                ? Expanded(
+                    child: ListView.builder(
+                      itemCount: transactionData
+                          .length, // Adjust the item count as needed
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.only(
+                              left: 10, right: 10, bottom: 20),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  Container(
+                                      width: 38.0,
+                                      height: 38.0,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: transactionData[index]
+                                                    ['status'] ==
+                                                'outgoing'
+                                            ? const Color(0xFFECFFD2)
+                                            : const Color(0xFFFFD2D2),
+                                      ),
+                                      child: Center(
+                                        child: transactionData[index]
+                                                    ['status'] ==
+                                                'outgoing'
+                                            ? SvgPicture.asset(
+                                                'Assets/ORGANISER_APP/Icons/Orders/outgoing.svg',
+                                                width: 16.0,
+                                                height: 16.0,
+                                              )
+                                            : SvgPicture.asset(
+                                                'Assets/ORGANISER_APP/Icons/Orders/incoming.svg',
+                                                width: 16.0,
+                                                height: 16.0,
+                                              ),
+                                      )),
+                                  const SizedBox(
+                                    width: 10.0,
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        transactionData[index]['name']!,
+                                        style: const TextStyle(
+                                          color: Color(0xFF696D61),
+                                          fontSize: 16,
+                                          fontFamily: 'SatoshiBold',
                                         ),
-                            )),
-                        const SizedBox(
-                          width: 10.0,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              transactionData[index]['name']!,
-                              style: const TextStyle(
-                                color: Color(0xFF696D61),
-                                fontSize: 16,
-                                fontFamily: 'SatoshiBold',
+                                      ),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            transactionData[index]['details']!,
+                                            style: const TextStyle(
+                                              color: Color(0xFF696D61),
+                                              fontSize: 10,
+                                              fontFamily: 'SatoshiMedium',
+                                            ),
+                                          ),
+                                          Text(
+                                            transactionData[index]
+                                                ['timestamp']!,
+                                            style: const TextStyle(
+                                              color: Color(0xFF696D61),
+                                              fontSize: 10,
+                                              fontFamily: 'SatoshiMedium',
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
-                            ),
-                            Row(
+                              Text(
+                                '-${transactionData[index]['price']}',
+                              )
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                  )
+                : Expanded(
+                    child: ListView.builder(
+                      itemCount:
+                          refundData.length, // Adjust the item count as needed
+                      itemBuilder: (context, index) {
+                        return Slidable(
+                          key: ValueKey(index),
+                          endActionPane: ActionPane(
+                            motion: const ScrollMotion(),
+                            children: [
+                              CustomSlidableAction(
+                                // An action can be bigger than the others.
+                                flex: 1,
+                                onPressed: (context) {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return AlertDialog(
+                                        backgroundColor: Colors.white,
+                                        surfaceTintColor: Colors.white,
+                                        content: SizedBox(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.37,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.9,
+                                          child: Column(children: [
+                                            SizedBox(
+                                              height: 40,
+                                            ),
+                                            const Text(
+                                              "Are you sure you want to issue a refund to Petter",
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                  fontSize: 24,
+                                                  fontFamily: 'SatoshiBold',
+                                                  color: Color(0xff201335)),
+                                            ),
+                                            SizedBox(
+                                              height: 20,
+                                            ),
+                                            const Text(
+                                              'Note: This action cannot be reversed.',
+                                              style: TextStyle(
+                                                  fontSize: 13,
+                                                  color: Color(0xffFF3D00),
+                                                  fontFamily: 'SantoshiLight'),
+                                            ),
+                                            SizedBox(
+                                              height: 70,
+                                            ),
+                                            GestureDetector(
+                                              onTap: () => {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          const RefundIssued()),
+                                                )
+                                              },
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 16),
+                                                child: Container(
+                                                  height: MediaQuery.of(context)
+                                                          .size
+                                                          .height *
+                                                      0.055,
+                                                  width: double.infinity,
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              15),
+                                                      color: const Color(
+                                                          0xff201335)),
+                                                  child: const Center(
+                                                    child: Text(
+                                                      "Yes, Issue refund!",
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 16,
+                                                          fontFamily:
+                                                              'SatoshiMedium'),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 20,
+                                            ),
+                                            GestureDetector(
+                                              onTap: () => {},
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 16),
+                                                child: Container(
+                                                  height: MediaQuery.of(context)
+                                                          .size
+                                                          .height *
+                                                      0.055,
+                                                  width: double.infinity,
+                                                  decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                          color: Color(
+                                                              0xff8DC73F)),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              15),
+                                                      color: const Color(
+                                                          0xffffffff)),
+                                                  child: const Center(
+                                                    child: Text(
+                                                      "No, cancel.",
+                                                      style: TextStyle(
+                                                          color:
+                                                              Color(0xff8DC73F),
+                                                          fontSize: 16,
+                                                          fontFamily:
+                                                              'SatoshiMedium'),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ]),
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
+
+                                backgroundColor: Color(0xFFFF3D00),
+                                foregroundColor: Colors.white,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SvgPicture.asset(
+                                        'Assets/Images/Icon/ref.svg'),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Text(
+                                      'Issue refund',
+                                      style: TextStyle(
+                                          fontSize: 8,
+                                          fontFamily: 'SatoshiBold'),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              CustomSlidableAction(
+                                // An action can be bigger than the others.
+                                flex: 1,
+                                onPressed: (context) {},
+
+                                backgroundColor: Color(0xFF201335),
+                                foregroundColor: Colors.white,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.info_outline,
+                                    ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Text(
+                                      'Details',
+                                      style: TextStyle(
+                                          fontSize: 8,
+                                          fontFamily: 'SatoshiBold'),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                left: 10, right: 10, bottom: 20),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  transactionData[index]['details']!,
-                                  style: const TextStyle(
-                                    color: Color(0xFF696D61),
-                                    fontSize: 10,
-                                    fontFamily: 'SatoshiMedium',
-                                  ),
+                                Row(
+                                  children: [
+                                    Container(
+                                        width: 38.0,
+                                        height: 38.0,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: refundData[index]['status'] ==
+                                                  'outgoing'
+                                              ? const Color(0xFFECFFD2)
+                                              : const Color(0xFFFFD2D2),
+                                        ),
+                                        child: Center(
+                                          child: refundData[index]['status'] ==
+                                                  'outgoing'
+                                              ? SvgPicture.asset(
+                                                  'Assets/ORGANISER_APP/Icons/Orders/outgoing.svg',
+                                                  width: 16.0,
+                                                  height: 16.0,
+                                                )
+                                              : SvgPicture.asset(
+                                                  'Assets/ORGANISER_APP/Icons/Orders/incoming.svg',
+                                                  width: 16.0,
+                                                  height: 16.0,
+                                                ),
+                                        )),
+                                    const SizedBox(
+                                      width: 10.0,
+                                    ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          refundData[index]['name']!,
+                                          style: const TextStyle(
+                                            color: Color(0xFF696D61),
+                                            fontSize: 16,
+                                            fontFamily: 'SatoshiBold',
+                                          ),
+                                        ),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              refundData[index]['details']!,
+                                              style: const TextStyle(
+                                                color: Color(0xFF696D61),
+                                                fontSize: 10,
+                                                fontFamily: 'SatoshiMedium',
+                                              ),
+                                            ),
+                                            Text(
+                                              refundData[index]['timestamp']!,
+                                              style: const TextStyle(
+                                                color: Color(0xFF696D61),
+                                                fontSize: 10,
+                                                fontFamily: 'SatoshiMedium',
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
                                 Text(
-                                  transactionData[index]['timestamp']!,
-                                  style: const TextStyle(
-                                    color: Color(0xFF696D61),
-                                    fontSize: 10,
-                                    fontFamily: 'SatoshiMedium',
-                                  ),
-                                ),
+                                  '-${refundData[index]['price']}',
+                                )
                               ],
                             ),
-                          ],
-                        ),
-                        Text("Hello")
-                      ],
+                          ),
+                        );
+                      },
                     ),
-                  );
-                },
-              ),
-            ),
+                  ),
           ],
         ),
       ),

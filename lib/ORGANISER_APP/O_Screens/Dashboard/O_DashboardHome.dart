@@ -7,6 +7,8 @@ import 'package:stub_guys/ORGANISER_APP/O_Screens/Dashboard/Components/Charts/Sa
 import 'package:stub_guys/ORGANISER_APP/O_Screens/Dashboard/Components/Sales.dart';
 import 'package:stub_guys/ORGANISER_APP/O_Screens/Dashboard/Components/firstreporttext.dart';
 import 'package:stub_guys/ORGANISER_APP/O_Screens/Dashboard/Components/mostperformingevents.dart';
+import 'package:stub_guys/ORGANISER_APP/O_Screens/O_AttendeesList/Attendees.dart';
+import 'package:stub_guys/ORGANISER_APP/O_Screens/O_Support/O_SupportMain.dart';
 
 class O_Dashboard extends StatefulWidget {
   const O_Dashboard({super.key});
@@ -16,6 +18,165 @@ class O_Dashboard extends StatefulWidget {
 }
 
 class _O_DashboardState extends State<O_Dashboard> {
+  //Navigation
+  void _showBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          height: MediaQuery.of(context).size.height * 0.5,
+          width: double.infinity,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 30.0, top: 15.0, right: 30.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: 5,
+                      width: 60,
+                      decoration: const BoxDecoration(
+                          color: Colors.grey,
+                          borderRadius: BorderRadius.all(Radius.circular(20))),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Navigation",
+                      textAlign: TextAlign.start,
+                      style: TextStyle(
+                        color: Color(0xFF201335),
+                        fontSize: 20,
+                        fontFamily: 'SatoshiBold',
+                        height: 1.1,
+                      ),
+                    ),
+                    Icon(
+                      Icons.close,
+                      size: 25,
+                      color: Color(0xFF545454),
+                    )
+                  ],
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.07,
+                ),
+                Row(
+                  children: [
+                    const Text(
+                      "Event Promotion",
+                      textAlign: TextAlign.start,
+                      style: TextStyle(
+                        color: Color(0xFF8DC73F),
+                        fontSize: 20,
+                        fontFamily: 'SatoshiBold',
+                        height: 1.1,
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    SvgPicture.asset('Assets/Images/copy.svg')
+                  ],
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.06,
+                ),
+                Row(
+                  children: [
+                    const Text(
+                      "Reports",
+                      textAlign: TextAlign.start,
+                      style: TextStyle(
+                        color: Color(0xFF8DC73F),
+                        fontSize: 20,
+                        fontFamily: 'SatoshiBold',
+                        height: 1.1,
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    SvgPicture.asset('Assets/Images/copy.svg')
+                  ],
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.06,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const O_Attendees()),
+                    );
+                  },
+                  child: const Text(
+                    "Attendees",
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                      color: Color(0xFF8DC73F),
+                      fontSize: 20,
+                      fontFamily: 'SatoshiBold',
+                      height: 1.1,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.06,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const O_Supportmain()),
+                    );
+                  },
+                  child: const Text(
+                    "Contact Support",
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                      color: Color(0xFF8DC73F),
+                      fontSize: 20,
+                      fontFamily: 'SatoshiBold',
+                      height: 1.1,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+  void _onLocationFeature(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          return Container(
+            color: Colors.white,
+            child: Padding(
+              padding:
+                  const EdgeInsets.only(left: 20.0, top: 16.0, right: 20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [],
+              ),
+            ),
+          );
+        }); 
+  }
+
   final List<String> texts = ['Text 1', 'Text 2', 'Text 3', 'Text 4', 'Text 5'];
 
   @override
@@ -47,11 +208,16 @@ class _O_DashboardState extends State<O_Dashboard> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      SizedBox(
-                        height: 40,
-                        width: 40,
-                        child: SvgPicture.asset(
-                          'Assets/ORGANISER_APP/Icons/Dashboard/hamburger.svg', // Replace with your SVG file path
+                      GestureDetector(
+                         onTap: () {
+              _showBottomSheet(context);
+            },
+                        child: SizedBox(
+                          height: 40,
+                          width: 40,
+                          child: SvgPicture.asset(
+                            'Assets/ORGANISER_APP/Icons/Dashboard/hamburger.svg', // Replace with your SVG file path
+                          ),
                         ),
                       ),
                       const SizedBox(
@@ -175,7 +341,7 @@ class _O_DashboardState extends State<O_Dashboard> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>  CreateEventsMain()),
+                                builder: (context) => CreateEventsMain()),
                           );
                         },
                         child: Container(

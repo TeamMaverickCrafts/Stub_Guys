@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:stub_guys/ATTANDEE_APP/A_Screens/Support/Components/queries.dart';
 import 'package:stub_guys/ATTANDEE_APP/A_Screens/Support/GetHelp.dart';
+import 'package:stub_guys/ORGANISER_APP/O_Screens/O_Support/O_GetHelp.dart';
 
 class O_Supportmain extends StatefulWidget { 
   const O_Supportmain({super.key});
@@ -148,7 +149,7 @@ class _O_SupportmainState extends State<O_Supportmain> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const Gethelp()),
+                                  builder: (context) => const O_Gethelp()),
                             )
                           },
                           child: Padding(
